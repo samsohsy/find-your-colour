@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Find Your Colour Profile</title>
+</head>
+<body>
+
+<form id="colorProfileForm">
+
+  <!-- Assume you have four attributes for simplicity -->
+  <div>
+    <label>Behavior:</label>
+    <label>Red<input type="radio" name="behavior" value="Red"></label>
+    <label>Yellow<input type="radio" name="behavior" value="Yellow"></label>
+    <label>Green<input type="radio" name="behavior" value="Green"></label>
+    <label>Blue<input type="radio" name="behavior" value="Blue"></label>
+  </div>
+  
+  <div>
+    <label>Works:</label>
+    <label>Red<input type="radio" name="works" value="Red"></label>
+    <label>Yellow<input type="radio" name="works" value="Yellow"></label>
+    <label>Green<input type="radio" name="works" value="Green"></label>
+    <label>Blue<input type="radio" name="works" value="Blue"></label>
+  </div>
+  
+  <div>
+    <label>Prioritizes:</label>
+    <label>Red<input type="radio" name="prioritizes" value="Red"></label>
+    <label>Yellow<input type="radio" name="prioritizes" value="Yellow"></label>
+    <label>Green<input type="radio" name="prioritizes" value="Green"></label>
+    <label>Blue<input type="radio" name="prioritizes" value="Blue"></label>
+  </div>
+  
+  <div>
+    <label>Afraid Of:</label>
+    <label>Red<input type="radio" name="afraidOf" value="Red"></label>
+    <label>Yellow<input type="radio" name="afraidOf" value="Yellow"></label>
+    <label>Green<input type="radio" name="afraidOf" value="Green"></label>
+    <label>Blue<input type="radio" name="afraidOf" value="Blue"></label>
+  </div>
+
+  <!-- Repeat for other attributes as needed -->
+  
+  <input type="button" value="Find My Colour" onclick="findColour()">
+</form>
+
+<div id="result"></div>
+
+<script>
+  function findColour() {
+    var form = document.getElementById('colorProfileForm');
+    var selections = {};
+    
+    // Collect the value of the selected radio button for each attribute
+    ['behavior', 'works', 'prioritizes', 'afraidOf'].forEach(function(attribute) {
+      var radios = form[attribute];
+      for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+          selections[attribute] = radios[i].value;
+          break;
+        }
+      }
+    });
+    
+    // Logic to determine the color based on selections
+    // This is where you'd implement the algorithm to determine the color
+    // For simplicity, we'll just count the selections of each color
+    var colorCounts = { Red: 0, Yellow: 0, Green: 0, Blue: 0 };
+    for (var key in selections) {
+      if (selections.hasOwnProperty(key)) {
+        colorCounts[selections[key]] += 1;
+      }
+    }
+    
+    // Determine the most selected color
+    var maxCount = 0;
+    var selectedColor = '';
+    for (var color in colorCounts) {
+      if (colorCounts[color] > maxCount) {
+        maxCount = colorCounts[color];
+        selectedColor = color;
+      }
+    }
+    
+    document.getElementById('result').innerText = 'Your colour is: ' + selectedColor;
+  }
+</script>
+
+</body>
+</html>
